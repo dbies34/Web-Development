@@ -1,0 +1,44 @@
+<html lang="en">
+    <style>
+        html{
+            background-color: lightblue;
+        }
+        header{
+            font-size: 30pt;
+            width: auto;
+            text-align: center;
+        }
+        body {
+            font-size: 20pt;
+            width: auto;
+            text-align: center;
+        }
+        button {
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+
+        
+        // allow the user to edit their information
+        function editInfo(){
+            console.log("edit info")
+
+        }
+    </script>
+    <header>Profile</header>
+    <body>
+        <img src="blank-profile-picture.jpg" alt="profile picture" width="300px" height="200px" style="border: 3px solid black;"><br>
+        <label>Name: </label><br>
+        <label>Age: </label><br>
+        <label>Work: </label><br>
+        <label>Education: </label><br>
+        <label>Hobbies: </label><br>
+        <label>Friends: </label><br>
+        <button onclick="editInfo">Edit Information</button>
+        <button onclick="location.href='/';">Log Out</button><br>
+        <button>Send a Message</button>
+        <button>Add Friend</button><br>
+        <button>Post</button> <button>Delete Account</button>
+    </body>
+</html>

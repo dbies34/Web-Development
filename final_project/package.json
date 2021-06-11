@@ -1,0 +1,31 @@
+{
+  "name": "cpsc-314-web-development-final-project-dbies34",
+  "version": "1.0.0",
+  "description": "web dev final project",
+  "main": "apps.js",
+  "scripts": {
+    "test": "",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CPSC314FA2020/cpsc-314-web-development-final-project-dbies34.git"
+  },
+  "author": "Drew Bies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CPSC314FA2020/cpsc-314-web-development-final-project-dbies34/issues"
+  },
+  "homepage": "https://github.com/CPSC314FA2020/cpsc-314-web-development-final-project-dbies34#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.4",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.1"
+  }
+}

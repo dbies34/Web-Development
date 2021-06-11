@@ -1,0 +1,37 @@
+<html lang="en">
+    <style>
+        html{
+            background-color: lightblue;
+        }
+        header{
+            font-size: 30pt;
+            width: auto;
+            text-align: center;
+        }
+        body {
+            font-size: 20pt;
+            width: auto;
+            text-align: center;
+        }
+        button {
+            border-radius: 5px;
+        }
+    </style>
+    <header>Profile</header>
+    <body>
+        <img src="blank-profile-picture.jpg" alt="profile picture" width="300px" height="200px" style="border: 3px solid black;"><br>
+        <label>Name: </label><br>
+        <label>Age: </label><br>
+        <label>Work: </label><br>
+        <label>Education: </label><br>
+        <label>Hobbies: </label><br>
+        <label>Friends: </label><br>
+        <button><a href="/edit/<%= response._id %>">Edit</a></button>
+        <button><a href="/delete/<%= response._id %>">Delete</a></button>
+        <!-- <button>Send a Message</button> -->
+        <!-- <button>Add Friend</button> -->
+        <div class="navigation">
+            <button><a href="/logout">Logout</a></button>
+        </div>
+    </body>
+</html>
