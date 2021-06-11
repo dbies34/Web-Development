@@ -1,0 +1,148 @@
+<!-- 
+    Drew Bies 
+    Web Development
+    10/26/2020
+    HW6 Starter code
+    Modified from: https://codepen.io/cathydutton/pen/GBcvo
+    -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW6 - JQuery</title>
+
+    <script
+        src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+        crossorigin="anonymous">
+    </script>
+
+    <!-- //#8 JQuery plugins -->
+    <!-- <script src="jquery-ui.min.js"></script> -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"
+        integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous">
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var seconds = 00
+            var tens = 00
+
+            var $appendTens = $("#tens")
+            var $appendSeconds = $("#seconds")
+            var $buttonStart = $("#button-start")
+            var $buttonStop = $("#button-stop")
+            var $buttonReset = $("#button-reset")
+            var interval, animationInterval
+            
+            $buttonStart.click(function () {
+                clearInterval(interval)
+                interval = setInterval(startTimer, 10)
+                animationInterval = setInterval(flickerTimer, 500)
+                $(".timer-background").css("background-color", "green")
+            })
+
+            $buttonStop.click(function () {
+                clearInterval(interval)
+                clearInterval(animationInterval)
+                $(".timer-background").css("background-color", "red")
+                $(".timer-background").css("opacity", 1.0)
+            })
+
+            $buttonReset.click(function () {
+                clearInterval(interval)
+                clearInterval(animationInterval)
+                tens = "00"
+                seconds = "00"
+                $appendTens.html(tens)
+                
+                $appendSeconds.html(seconds)
+                $(".timer-background").css("background-color", "lightgray")
+                $(".timer-background").css("opacity", 1.0)
+            })
+
+            // flicker the timer background every half second
+            function flickerTimer(){
+                var $timer = $(".timer-background")
+                if ($timer.css("opacity") == 1){
+                    $timer.css("opacity", "0.8")
+                } else{
+                    $timer.css("opacity", "1")
+                }
+            }
+
+            function startTimer() {
+                tens++
+
+                if (tens < 9) {
+                    $appendTens.html("0" + tens)
+                }
+
+                if (tens > 9) {
+                    $appendTens.html(tens)
+
+                }
+
+                if (tens > 99) {
+                    console.log("seconds")
+                    seconds++
+                    $appendSeconds.html("0" + seconds)
+                    tens = 0
+                    $appendTens.html("0" + 0)
+                }
+
+                if (seconds > 9) {
+                    $appendSeconds.html(seconds)
+                }
+
+
+            }
+
+            $("p").addClass("timer-background")
+            $(".timer-background").css({
+                "background-color": "lightgray",
+                "text-align": "center",
+                "border-radius": "5px",
+            })
+
+            $("button").addClass("button-style")
+            $(".button-style").css({
+                "border-radius": "2em",
+                "display": "inline-block",
+                "padding": "0.3em 1.2em",
+                "margin": "0 0.3em 0.3em 0",
+                "color": "white",
+                "background-color": "purple",
+                "boxing-size": "border-box",
+                "text-align": "center",
+            })
+
+            $(".wrapper").css({
+                "text-align": "center",
+                "margin": "auto",
+                "width": "25%",
+                "border": "3px solid purple",
+                "border-radius": "25px",
+                "background-color": "orange",
+                "padding": "10px 10px",
+                "font-family": "Roboto"
+            })
+            $("h1").css("text-shadow", "0 0 5px purple")
+            
+        })
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1>JQuery Stopwatch</h1>
+        <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+        <button id="button-start">Start</button>
+        <button id="button-stop">Stop</button>
+        <button id="button-reset">Reset</button>
+    </div>
+</body>
+
+</html>
