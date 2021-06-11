@@ -1,0 +1,442 @@
+<!-- 
+	  Drew Bies
+	  Web Dev
+      Homework 4
+      10/14/20
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz App</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            font-family: Gotham Rounded;
+        }
+
+        :root {
+            --hue-neutral: 200;
+            --hue-wrong: 0;
+            --hue-correct: 145;
+        }
+
+        body {
+            --hue: var(--hue-neutral);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: hsl(var(--hue), 100%, 20%);
+        }
+
+        body.correct {
+            --hue: var(--hue-correct);
+        }
+
+        body.wrong {
+            --hue: var(--hue-wrong);
+        }
+
+        .container {
+            width: 800px;
+            max-width: 80%;
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px 2px;
+        }
+
+		#info-container {
+			width: 780px;
+			height: 100px;
+			margin-top: 20px;
+			background-color: tan;
+			border: 5px dotted black;
+			border-radius: 5px;
+			box-shadow: 0 0 10px 2px;
+			text-align: center;
+			padding: 10px 10px;
+		}
+
+		#options{
+			width: 780px;
+			height: 100px;
+			padding: 10px 10px;
+			border-radius: 10px;
+			border: 3px dotted red;
+			
+		}
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            --hue: var(--hue-neutral);
+            border: 3px solid red;
+			background-color: navy;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: white;
+            outline: none;
+        }
+
+        .btn:hover {
+            border-color: green;
+        }
+
+        .btn.correct {
+            --hue: var(--hue-correct);
+            color: green;
+        }
+
+        .btn.wrong {
+            --hue: var(--hue-wrong);
+        }
+
+        .start-btn, .next-btn, .back-btn {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+    <script>
+
+        // Add an event listener for the DOMContentLoaded event
+        window.addEventListener("DOMContentLoaded", domLoaded);
+
+        function domLoaded() {
+            const startButton = document.getElementById('start-btn')
+            const nextButton = document.getElementById('next-btn')
+			const backButton = document.getElementById('back-btn')
+            const questionContainerElement = document.getElementById('question-container')
+            const questionElement = document.getElementById('question')
+            const answerButtonsElement = document.getElementById('answer-buttons')
+			const options = document.getElementById('options')
+			var info = null
+			var shuffleCards, removeCorrect, timed, currentQuestionIndex, timer
+			var correctQuestions = []
+			var seconds = 0, minutes = 0
+
+            var shuffledQuestions = []
+            //using the domLoaded function because the buttons need to be rendered before we can
+            //add an event listener
+            startButton.addEventListener('click', startGame)
+            nextButton.addEventListener('click', () => {
+				nextButton.innerText = 'Next'
+				removeInfo()
+                currentQuestionIndex++
+				if (shuffledQuestions.length <= currentQuestionIndex + 1) {
+                    restart()
+                }
+                setNextQuestion()
+            })
+			backButton.addEventListener('click', () => {
+				if(currentQuestionIndex != 0){
+					currentQuestionIndex--
+					setNextQuestion()
+				}
+				removeInfo()
+				nextButton.innerText = 'Next'
+			})
+
+			function removeInfo(){
+				if(info != null){
+					info.remove()
+					info = null
+				}
+			}
+
+			function setOptions(){
+				shuffleCards = document.getElementById('shuffleCards').checked
+				removeCorrect = document.getElementById('removeCorrect').checked
+				timed = document.getElementById('timed').checked
+			}
+
+            function startGame() {
+				setOptions()
+				options.remove()
+                startButton.classList.add('hide')
+				backButton.classList.remove('hide')
+				nextButton.classList.remove('hide')
+				if(shuffleCards){
+					shuffledQuestions = questions.sort(() => Math.random() - .5)
+				} else{
+					shuffledQuestions = questions
+				}
+                currentQuestionIndex = 0
+                questionContainerElement.classList.remove('hide')
+                setNextQuestion()
+				if(timed){
+					timer = setInterval(updateTimer, 1000)
+					console.log("timed")
+				}
+            }
+
+			function updateTimer(){
+				seconds++
+				if(seconds == 60){
+					seconds = 0
+					minutes++
+				}
+				document.getElementById('time').innerHTML = minutes + "m " + seconds + "s"
+				totalSeconds = seconds + minutes * 60
+				if(totalSeconds % 30 == 0 || ((totalSeconds % 30) - 2) == 0 && totalSeconds != 2){
+					document.body.style.backgroundColor = "red";
+				} else{
+					document.body.style.backgroundColor = "hsl(var(--hue), 100%, 20%)";
+				}
+			}
+
+            function setNextQuestion() {
+                resetState()
+                showQuestion(shuffledQuestions[currentQuestionIndex])
+            }
+
+            function showQuestion(question) {
+                questionElement.innerText = question.question
+                question.answers.forEach(answer => {
+                    const button = document.createElement('button')
+                    button.innerText = answer.text
+                    button.classList.add('btn')
+                    if (answer.correct) {
+                        button.dataset.correct = answer.correct
+                    }
+                    button.addEventListener('click', selectAnswer)
+                    answerButtonsElement.appendChild(button)
+                })
+            }
+
+            function resetState() {
+                clearStatusClass(document.body)
+                while (answerButtonsElement.firstChild) {
+                    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+                }
+            }
+
+			function restart(){
+				nextButton.innerText = 'Restart'
+				currentQuestionIndex = 0
+				shuffleCards = false
+
+			}
+
+            function selectAnswer(e) {
+                const selectedButton = e.target
+                const correct = selectedButton.dataset.correct
+                setStatusClass(document.body, correct)
+                Array.from(answerButtonsElement.children).forEach(button => {
+                    setStatusClass(button, button.dataset.correct)
+                })
+                if (shuffledQuestions.length <= currentQuestionIndex + 1) {
+                    restart()
+                } 
+            }
+
+			function showInfo(){
+				if(info == null){
+					info = document.createElement("div")
+					info.id = "info-container"
+					document.getElementById("container").appendChild(info)
+					info.innerText = shuffledQuestions[currentQuestionIndex].info
+				}
+			}
+
+            function setStatusClass(element, correct) {
+                clearStatusClass(element)
+                if (correct) {
+                    element.classList.add('correct')
+					showInfo()
+					if(removeCorrect){
+						correctQuestions.add(shuffledQuestions[currentQuestionIndex])
+						shuffledQuestions.splice(currentQuestionIndex, 1)
+					}
+                } else {
+                    element.classList.add('wrong')
+                }
+            }
+
+            function clearStatusClass(element) {
+                element.classList.remove('correct')
+                element.classList.remove('wrong')
+            }
+
+			
+            var questions = [
+                {
+                    question: 'Where is Gonzaga located?',
+                    answers: [
+                        { text: 'Spokane, WA', correct: true },
+                        { text: 'Seattle, WA', correct: false },
+						{ text: 'Bellingham, WA', correct: false },
+						{ text: 'Pullman, WA', correct: false },
+                    ],
+					info: 'Spokane is in eastern Washington.'
+                },
+                {
+                    question: 'What is Gonzaga\'s mascot?',
+                    answers: [
+                        { text: 'Bulldogs', correct: true },
+                        { text: 'Knights', correct: false },
+                        { text: 'Huskies', correct: false },
+                        { text: 'Cougars', correct: false },
+                        { text: 'Tigers', correct: false },
+                        { text: 'Pitbulls', correct: false },
+                    ],
+					info: 'Spike is the name of the bulldog.'
+                },
+                {
+					question: 'Which sports team does Gonzaga NOT have?',
+					answers: [
+						{ text: 'Baseball', correct: false },
+						{ text: 'Football', correct: true },
+						{ text: 'Basketball', correct: false },
+						{ text: 'Golf', correct: false },
+						{ text: 'Rowing', correct: false },
+						{ text: 'Cross Country', correct: false },
+					],
+					info: 'Gonzaga has not had a football team since their last season in 1941 because of World War II.'
+				},
+				{
+					question: 'Does Gonzaga have a Law School?',
+					answers: [
+						{ text: 'Yes', correct: true },
+						{ text: 'No', correct: false },
+					],
+					info: 'Gonzaga has had a Law School since 1912.'
+				},
+				{
+					question: 'Who was the school named after?',
+					answers: [
+						{ text: 'St. Aloysius Gonzaga', correct: true },
+						{ text: 'St. Ignatius Gonzaga', correct: false },
+						{ text: 'President Thanye', correct: false },
+						{ text: 'Bing Crosby', correct: false },
+					],
+					info: 'Cataldo named the school after St. Aloysius Gonzaga. The Italian and Jesuit saint is known for his work with victims of the plague.'
+				},
+				{
+					question: 'What conference does Gonzaga Athletics compete in?',
+                    answers: [
+                        { text: 'Pac 12', correct: false },
+                        { text: 'Big Sky', correct: false },
+                        { text: 'Big 12', correct: false },
+                        { text: 'Pacific North West', correct: false },
+                        { text: 'Big West', correct: false },
+                        { text: 'West Coast', correct: true },
+                    ],
+					info: 'Gonzaga has been in the WCC since 1979.'
+				},
+				{
+					question: 'How many undergraduate does Gonzaga students have?',
+                    answers: [
+                        { text: '5320', correct: true },
+                        { text: '6042', correct: false },
+                        { text: '3879', correct: false },
+                        { text: '10,172', correct: false },
+                    ],
+					info: 'The average class size is 22 students.'
+				},
+				{
+					question: 'What is the name of Gonzaga\'s fan section?',
+                    answers: [
+                        { text: 'The 12s', correct: false },
+                        { text: 'The Kennel Club', correct: true },
+                        { text: 'The Pound', correct: false },
+                        { text: 'No name', correct: false },
+                    ],
+					info: 'The Kennel is one of the hardest courts for opponents to play at.'
+				},
+				{
+					question: 'When was Gonzaga established?',
+                    answers: [
+                        { text: '1865', correct: false },
+                        { text: '1901', correct: false },
+                        { text: '1887', correct: true },
+                        { text: '1880', correct: false },
+                        { text: '1787', correct: false },
+                        { text: '1912', correct: false },
+                    ],
+					info: 'Gonzaga University was founded in 1887 by Italian-American Joseph Cataldo.'
+				},
+				{
+					question: 'How far has Gonzaga Basketball gone in the NCAA Tournament?',
+                    answers: [
+                        { text: 'Sweet Sixteen', correct: false },
+                        { text: 'Final Four', correct: false },
+                        { text: 'Championship Game', correct: true },
+                        { text: 'Elite Eight', correct: false },
+                        { text: 'Round of 64', correct: false },
+                        { text: 'Round of 32', correct: false },
+                    ],
+					info: 'Gonzaga Basketball lost to North Carolina in the champioship game in 2017.'
+				}
+            ]
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id="answer-buttons" class="btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+        </div>
+        <div class="controls">
+			<table>
+				<tr>
+					<th>
+						<fieldset id="options" style="text-align: left;">
+							<legend>OPTIONS</legend>
+							<label for="shuffleCards">Shuffle Cards:</label>
+							<input type="checkbox" id="shuffleCards" value="shuffleCards" checked><br>
+							<label for="removeCorrect">Remove Correct from Deck:</label>
+							<input type="checkbox" id="removeCorrect" value="removeCorrect"><br>
+							<label for="timed">Timed Session</label>
+							<input type="checkbox" id="timed" value="timed">
+						</fieldset>
+					</th>
+				</tr>
+				<tr>
+					<th>
+						<button id="start-btn" class="start-btn btn">Start</button>
+						<button id="back-btn" class="back-btn btn hide">Back</button>
+            			<button id="next-btn" class="next-btn btn hide">Next</button>
+					</th>
+				</tr>
+				<tr>
+					<th id="time" style="text-align: center;"></th>
+				</tr>
+			</table>
+        </div>
+    </div>
+</body>
+</html>

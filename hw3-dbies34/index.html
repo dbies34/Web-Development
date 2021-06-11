@@ -1,0 +1,211 @@
+<!--
+      index.html
+      Drew Bies
+      CPSC 314
+      Homework 3
+      Last modified: 10/2/2020
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+<meta charset="UTF-8"> 
+<title>Introduction</title>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<style>
+      header{
+            background: linear-gradient(blue, red);
+            line-height: 100px;
+            flex: 0 1 100%;
+            font-size: 50pt;
+            text-align: center;
+            text-shadow:0 0 7px lightcoral;
+            border: 2px black;
+      }
+      body{
+            background: black;
+      }
+      #container{
+            display: flex;
+            flex-direction: row;
+      }
+      aside{
+            flex: 0 1 20%;
+            background: green;
+            text-align: center;
+            border: 2px black;
+      }
+      main{
+            flex: 0 1 80%;
+            background: cornflowerblue;
+            padding: 25px;
+            align-items: center;
+            border: black;
+            border-width: 6px;
+            
+      }
+      table, th, tr {
+            border: 2px solid black;
+            padding: 5px 5px;
+      }
+      tr:nth-child(even){
+            background: rgb(95, 161, 184);
+      }
+      tr:nth-child(odd){
+            background: rgb(138, 219, 247);
+      }
+      tr:first-child{
+            font-size: 15pt;
+            background-color: gray;
+      }
+      caption{
+            font-size: x-large;
+      }
+      h2{
+            color: white;
+            background-color: black;
+            box-shadow: 5px 5px 7px crimson;
+            border-radius: 7px;
+            text-align: center;
+      }
+      h1{
+            background-color: blue;
+            font-size: 25pt;
+            color: black;
+            border: 3px solid black;
+            text-shadow: 0 0 2px red;
+            border-radius: 20px;
+      }
+      li{
+            margin: 5px;
+            max-width: 150px;
+            padding: 5px 5px;
+            background-color: deepskyblue;
+            border-bottom-right-radius: 15px;
+            border-top-left-radius: 15px;
+      }
+      #logoMain{
+            width: 75px;
+            height: 75px;
+            margin: 15px;
+            background: radial-gradient(red, black);
+            position: absolute;
+            box-shadow: 5px 5px 5px black;
+      }
+      #insideLogo{
+            width: 53px;
+            height: 53px;
+            margin: 11px;
+            background: radial-gradient(black, red);
+            position: absolute;
+            transform: rotate(45deg);
+      }
+      #middleLogo{
+            width: 37px;
+            height: 37px;
+            margin: 8px;
+            transform: rotate(45deg);
+            background: radial-gradient(black, blue);
+            position: absolute;
+      }
+</style>
+<body>
+      <header><div id="logoMain"><div id="insideLogo"><div id="middleLogo"></div></div></div>My Career History</header>
+      <div id="container">
+            <aside>
+                  <img src="drew.PNG" width="275" height="325" alt="picture of me">
+                  <h1>Drew Bies</h1>
+                  <h2>Summary</h2>
+                  <p>My name is Drew Bies and I am a senior computer science student at Gonzaga. I grew up in Redmond, WA and I love to watch and play sports.</p>
+                  <h2>Contact</h2>
+                  <p>Phone: <a href="https://gonzaga.edu" target="_blank">(xxx)-xxxxxxx</a></p>
+                  <p>Email: <a href="https://gonzaga.edu" target="_blank">drew@gonzaga.edu</a></p>
+
+            </aside>
+            <main>
+                  <h2>Core Skills:</h2>
+                  <ul>
+                        <li>Programming</li>
+                        <li>Teamwork</li>
+                        <li>Software Engineering</li>
+                  </ul>
+                  <div>
+                        <h2>Education:</h2>
+                        <table>
+                              
+                              <tr>
+                                    <th>School</th>
+                                    <th>Location</th>
+                                    <th>Degree</th>
+                                    <th>Date</th>
+                              </tr>
+                              <tr>
+                                    <th>Gonzaga University</th>
+                                    <th>Spokane, WA</th>
+                                    <th>B.A. Computer Science</th>
+                                    <th>2017-2021</th>
+                              </tr>
+                              <tr>
+                                    <th>Redmond Highschool</th>
+                                    <th>Redmond, WA</th>
+                                    <th>N/A</th>
+                                    <th>2013-2017</th>
+                              </tr>
+                        </table>
+                  </div>    
+                  <br>
+                  <div>
+                        <h2>Qualifications:</h2>
+                        <table>
+                              <tr>
+                                    <th colspan="7">Skills</th>
+            
+                              </tr>
+                              <tr>
+                                    <th>Software Development</th>
+                                    <th>Operating Systems</th>
+                                    <th>GUI Development</th>
+                                    <th>iOS Development</th>
+                                    <th>Web Development</th>
+                                    <th>Cyber Security</th>
+                                    <th>Microsoft Office</th>
+                              </tr>
+                        </table>
+                  </div>
+                  <div>
+                        <h2>Work Experience: </h2>
+                        <table>
+                              <tr>
+                                    <th>Company</th>
+                                    <th>Role</th>
+                                    <th>Date</th>
+                                    <th>Details</th>
+                              </tr>
+                              <tr>
+                                    <th>Innovative Advantage</th>
+                                    <th>Software Engineer</th>
+                                    <th>Summer of 2019</th>
+                                    <th>Built a thermal testing rack for their products.</th>
+                              </tr>
+                              <tr>
+                                    <th>Innovative Advantage</th>
+                                    <th>Software Engineer</th>
+                                    <th>Summer of 2018</th>
+                                    <th>Built a program that uploads software to their products.</th>
+                              </tr>
+                        </table>
+                  </div>
+                  <div>
+                        <h2>Interests and Hobbies:</h2>
+                        <ol>
+                              <li>Golf <a href="https://my.spokanecity.org/golf/" target="_blank"><img src="golfBallIcon.png" width="15" height="15" alt="golf"></a></li>
+                              <li>Baseball <img src="baseballIcon.png" width="15" height="15" alt="baseball"></li>
+                              <li>Football <img src="footballIcon.png" width="15" height="15" alt="football"></li>
+                              <li>Video Games <img src="vgIcon.png" width="15" height="15" alt="video games"></li>
+                              <li>Cooking <img src="cookIcon.png" width="15" height="15" alt="cooking"></li>
+                              <li>Watching Movies <img src="movieIcon.png" width="15" height="15" alt="watching movies"></li>
+                        </ol>
+                  </div>
+            </main>
+      </div>
+</body>
+</html>
