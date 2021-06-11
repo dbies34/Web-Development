@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        function changeTextColor(newColor) {
+            var x = document.getElementById("text");
+            x.style.color = newColor;
+        }    
+    </script>
+    <style>
+        p{
+            color: green;
+        }
+    </style>
+<head>
+      <title>Drew Bies Web Development</title>
+</head>
+<body>
+    <h1>HW1 Submission</h1> 
+    <p id="text">I am <strong>excited</strong> to take this web development class. <br>
+        I hope to be able to make a webpage from <em>scratch</em> after this course.
+    </p>
+    <a href="https://www.123rf.com/photo_45863010_portrait-of-excited-man-looking-game-on-laptop-at-home.html">
+        <img src="excited-man-laptop.jpg" alt="me excited to learn web dev" width="400" height="300"></a>
+
+    <p>
+        Change paragraph color to: 
+            <button type="button" onclick="changeTextColor('red')">Red</button>
+            <button type="button" onclick="changeTextColor('green')">Green</button>
+    </p>    
+</body> 
+</html>
